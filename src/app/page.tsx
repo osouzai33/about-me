@@ -1,100 +1,280 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { GithubIcon, MenuIcon, MoonIcon, SunIcon } from "lucide-react";
 
-export default function Home() {
+export default function Component() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div
+      className={`min-h-screen ${
+        isDarkMode ? "dark bg-gray-900 text-white" : "bg-blue-50"
+      } transition-colors duration-300`}
+    >
+      <div className="fixed inset-0 pointer-events-none">
+        <div
+          className="absolute rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"
+          style={{
+            backgroundColor: isDarkMode ? "#4B0082" : "#4169E1",
+            left: `${mousePosition.x}px`,
+            top: `${mousePosition.y}px`,
+            width: "300px",
+            height: "300px",
+            transition: "all 0.3s ease-out",
+          }}
+        ></div>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <header
+        className={`${
+          isDarkMode ? "bg-gray-800" : "bg-blue-600"
+        } text-white py-4 sticky top-0 z-10 shadow-md transition-colors duration-300`}
+      >
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold font-serif animate-pulse">
+            Souta YAMASAKI
+          </h1>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="p-2 rounded-full hover:bg-opacity-20 hover:bg-white transition-colors duration-200"
+            >
+              {isDarkMode ? <SunIcon /> : <MoonIcon />}
+            </button>
+            <button
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <MenuIcon />
+            </button>
+            <nav
+              className={`${
+                isMenuOpen ? "block" : "hidden"
+              } md:block absolute md:relative top-full right-0 bg-blue-600 md:bg-transparent`}
+            >
+              <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 p-4 md:p-0">
+                {["About", "Projects", "Skills", "Contact"].map((item) => (
+                  <li key={item}>
+                    <a
+                      href={`#${item.toLowerCase()}`}
+                      className="block text-lg md:text-base hover:text-blue-200 transition-colors duration-200 ease-in-out"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
+      </header>
+
+      <main className="flex-grow container mx-auto px-4 py-12">
+        <section id="about" className="mb-20">
+          <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-6 font-serif">
+            About Me
+          </h2>
+          <div
+            className={`${
+              isDarkMode ? "bg-gray-800" : "bg-white"
+            } rounded-lg shadow-xl p-8 transform hover:rotate-1 transition-all duration-300`}
+          >
+            <p className="text-lg leading-relaxed">
+              こんにちは、山崎惣大です。
+              <span className="inline-block animate-bounce">🚀</span>{" "}
+              新しい技術に挑戦し、
+              <span className="inline-block animate-spin">💡</span>{" "}
+              クリエイティブなアイデアを形にすることが大好きです。
+              コードを書くときは、画面上に驚きと喜びを生み出すことを目指しています。
+              <span className="inline-block animate-pulse">✨</span>{" "}
+              フルスタックエンジニアへ向けて勉強頑張りますっ！
+            </p>
+          </div>
+        </section>
+
+        <section id="projects" className="mb-20">
+          <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-6 font-serif">
+            Projects
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                title: "Project 1",
+                desc: "魔法のような UX を実現した web アプリ",
+                emoji: "🏀",
+              },
+              {
+                title: "Project 2",
+                desc: "驚きの速さを誇る e コマースプラットフォーム",
+                emoji: "⚡",
+              },
+            ].map((project, index) => (
+              <Card
+                key={index}
+                className={`overflow-hidden transform transition-all duration-300 hover:scale-105 hover:rotate-3 ${
+                  isDarkMode ? "bg-gray-800 text-white" : "bg-white"
+                }`}
+              >
+                <CardContent className="p-6 relative">
+                  <div className="absolute top-2 right-2 text-4xl animate-bounce">
+                    {project.emoji}
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-3">
+                    {project.title}
+                  </h3>
+                  <p className={isDarkMode ? "text-gray-300" : "text-gray-600"}>
+                    {project.desc}
+                  </p>
+                  <Button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white">
+                    Click
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section id="skills" className="mb-20">
+          <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-6 font-serif">
+            Skills
+          </h2>
+          <div
+            className={`${
+              isDarkMode ? "bg-gray-800" : "bg-white"
+            } rounded-lg shadow-xl p-8`}
+          >
+            <ul className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              {[
+                { skill: "HTML/CSS", emoji: "🎨" },
+                { skill: "JavaScript", emoji: "🌟" },
+                { skill: "React", emoji: "⚛️" },
+                { skill: "Next.js", emoji: "🚀" },
+                { skill: "TypeScript", emoji: "📘" },
+                { skill: "Responsive Design", emoji: "📱" },
+              ].map((item, index) => (
+                <li key={index} className="flex items-center text-lg group">
+                  <span className="mr-3 text-2xl group-hover:animate-spin">
+                    {item.emoji}
+                  </span>
+                  <span className="group-hover:text-blue-500 transition-colors duration-200">
+                    {item.skill}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section id="contact" className="mb-20">
+          <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-6 font-serif">
+            Contact Me
+          </h2>
+          <Card
+            className={`overflow-hidden ${
+              isDarkMode ? "bg-gray-800" : "bg-white"
+            }`}
+          >
+            <CardContent className="p-8 relative">
+              <div className="absolute top-2 right-2 text-4xl animate-pulse">
+                💌
+              </div>
+              <form className="space-y-6">
+                {[
+                  {
+                    id: "name",
+                    label: "Name",
+                    type: "text",
+                    placeholder: "Your magical name",
+                  },
+                  {
+                    id: "email",
+                    label: "Email",
+                    type: "email",
+                    placeholder: "your@magicemail.com",
+                  },
+                ].map((field) => (
+                  <div key={field.id}>
+                    <label
+                      htmlFor={field.id}
+                      className="block text-sm font-medium mb-2"
+                    >
+                      {field.label}
+                    </label>
+                    <Input
+                      id={field.id}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      className={
+                        isDarkMode
+                          ? "bg-gray-700 text-white"
+                          : "bg-blue-50 text-blue-800"
+                      }
+                    />
+                  </div>
+                ))}
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Message
+                  </label>
+                  <Textarea
+                    id="message"
+                    placeholder="Your enchanting message"
+                    className={
+                      isDarkMode
+                        ? "bg-gray-700 text-white"
+                        : "bg-blue-50 text-blue-800"
+                    }
+                  />
+                </div>
+                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white group">
+                  <span className="group-hover:animate-ping">Send</span> Magic
+                  Message
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer
+        className={`${
+          isDarkMode ? "bg-gray-800" : "bg-blue-600"
+        } text-white py-12 transition-colors duration-300`}
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center space-x-8 mb-6">
+            {[GithubIcon].map((Icon, index) => (
+              <a
+                key={index}
+                href="https://github.com/osouzai33"
+                className="text-2xl hover:text-blue-300 transition-colors duration-200 transform hover:scale-125"
+              >
+                <Icon />
+              </a>
+            ))}
+          </div>
+          <p className="text-center text-sm">
+            © {new Date().getFullYear()} 山崎惣大のアバウトミー. All rights
+            reserved.
+          </p>
+        </div>
       </footer>
     </div>
   );
