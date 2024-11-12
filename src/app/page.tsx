@@ -1,15 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { GithubIcon, MenuIcon, MoonIcon, SunIcon } from "lucide-react";
+import { GithubIcon, MenuIcon, MoonIcon, Router, SunIcon } from "lucide-react";
 
 export default function Component() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const router = useRouter();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -95,10 +98,10 @@ export default function Component() {
           >
             <p className="text-lg leading-relaxed">
               こんにちは、山崎惣大です。
-              <span className="inline-block animate-bounce">🚀</span>{" "}
+              <span className="inline-block animate-bounce">🏀</span>{" "}
               新しい技術に挑戦し、
               <span className="inline-block animate-spin">💡</span>{" "}
-              クリエイティブなアイデアを形にすることが大好きです。
+              クリエイティブなアイデアを形にすることが大好きです！
               コードを書くときは、画面上に驚きと喜びを生み出すことを目指しています。
               <span className="inline-block animate-pulse">✨</span>{" "}
               フルスタックエンジニアへ向けて勉強頑張りますっ！
@@ -113,13 +116,13 @@ export default function Component() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
-                title: "Project 1",
-                desc: "魔法のような UX を実現した web アプリ",
-                emoji: "🏀",
+                title: "About Me",
+                desc: "私についての簡単な紹介",
+                emoji: "🚀",
               },
               {
-                title: "Project 2",
-                desc: "驚きの速さを誇る e コマースプラットフォーム",
+                title: "作成中",
+                desc: "デザインについて綺麗な作品を作っています!",
                 emoji: "⚡",
               },
             ].map((project, index) => (
@@ -139,7 +142,12 @@ export default function Component() {
                   <p className={isDarkMode ? "text-gray-300" : "text-gray-600"}>
                     {project.desc}
                   </p>
-                  <Button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white">
+                  <Button
+                    className="mt-4 bg-blue-500 hover:bg-blue-600 text-white"
+                    onClick={() => {
+                      router.push("https://portpholio-ebon.vercel.app/");
+                    }}
+                  >
                     Click
                   </Button>
                 </CardContent>
@@ -271,7 +279,7 @@ export default function Component() {
             ))}
           </div>
           <p className="text-center text-sm">
-            © {new Date().getFullYear()} 山崎惣大のアバウトミー. All rights
+            © {new Date().getFullYear()} 山崎惣大のポートフォリオ. All rights
             reserved.
           </p>
         </div>
