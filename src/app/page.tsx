@@ -25,7 +25,7 @@ export default function Component() {
   return (
     <div
       className={`min-h-screen ${
-        isDarkMode ? "dark bg-gray-900 text-white" : "bg-blue-50"
+        isDarkMode ? "dark bg-gray-900 text-white" : "bg-gray-50"
       } transition-colors duration-300`}
     >
       <div className="fixed inset-0 pointer-events-none">
@@ -48,7 +48,7 @@ export default function Component() {
         } text-white py-4 sticky top-0 z-10 shadow-md transition-colors duration-300`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold font-serif animate-pulse">
+          <h1 className="text-2xl font-bold font-mono animate-pulse">
             Souta YAMASAKI
           </h1>
           <div className="flex items-center space-x-4">
@@ -88,12 +88,13 @@ export default function Component() {
 
       <main className="flex-grow container mx-auto px-4 py-12">
         <section id="about" className="mb-20">
-          <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-6 font-serif">
-            About Me
+          <h2 className="text-4xl font-bold text-black-800 dark:text-blue-300 mb-6 font-mono">
+            <span className="text-cyan-400">&lt;</span>About Me
+            <span className="text-cyan-400">/&gt;</span>
           </h2>
           <div
             className={`${
-              isDarkMode ? "bg-gray-800" : "bg-white"
+              isDarkMode ? "bg-blue-800" : "bg-white"
             } rounded-lg shadow-xl p-8 transform hover:rotate-1 transition-all duration-300`}
           >
             <p className="text-lg leading-relaxed">
@@ -110,8 +111,9 @@ export default function Component() {
         </section>
 
         <section id="projects" className="mb-20">
-          <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-6 font-serif">
-            Projects
+          <h2 className="text-4xl font-bold text-black-800 dark:text-blue-300 mb-6 font-mono">
+            <span className="text-cyan-400">&lt;</span>Project
+            <span className="text-cyan-400">/&gt;</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
@@ -157,8 +159,9 @@ export default function Component() {
         </section>
 
         <section id="skills" className="mb-20">
-          <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-6 font-serif">
-            Skills
+          <h2 className="text-4xl font-bold text-black-800 dark:text-blue-300 mb-6 font-mono">
+            <span className="text-cyan-400">&lt;</span>Skills
+            <span className="text-cyan-400">/&gt;</span>
           </h2>
           <div
             className={`${
@@ -167,12 +170,12 @@ export default function Component() {
           >
             <ul className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {[
-                { skill: "HTML/CSS", emoji: "🎨" },
-                { skill: "JavaScript", emoji: "🌟" },
-                { skill: "React", emoji: "⚛️" },
-                { skill: "Next.js", emoji: "🚀" },
-                { skill: "TypeScript", emoji: "📘" },
-                { skill: "Responsive Design", emoji: "📱" },
+                { skill: "HTML/CSS", emoji: "🎨", level: 90 },
+                { skill: "JavaScript", emoji: "🌟", level: 85 },
+                { skill: "React", emoji: "⚛️", level: 80 },
+                { skill: "Next.js", emoji: "🚀", level: 75 },
+                { skill: "TypeScript", emoji: "📘", level: 70 },
+                { skill: "Responsive Design", emoji: "📱", level: 95 },
               ].map((item, index) => (
                 <li key={index} className="flex items-center text-lg group">
                   <span className="mr-3 text-2xl group-hover:animate-spin">
@@ -181,6 +184,12 @@ export default function Component() {
                   <span className="group-hover:text-blue-500 transition-colors duration-200">
                     {item.skill}
                   </span>
+                  <div className="w-full bg-gray-400 rounded-full h-2.5">
+                    <div
+                      className="bg-blue-400 h-2.5 rounded-full transition-all duration-1000 ease-out"
+                      style={{ width: `${item.level}%` }}
+                    ></div>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -188,8 +197,9 @@ export default function Component() {
         </section>
 
         <section id="contact" className="mb-20">
-          <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-6 font-serif">
-            Contact Me
+          <h2 className="text-4xl font-bold text-black-800 dark:text-blue-300 mb-6 font-mono">
+            <span className="text-cyan-400">&lt;</span>Contact Me
+            <span className="text-cyan-400">/&gt;</span>
           </h2>
           <Card
             className={`overflow-hidden ${
